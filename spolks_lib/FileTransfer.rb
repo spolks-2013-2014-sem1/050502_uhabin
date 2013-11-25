@@ -1,9 +1,11 @@
+require "Constants.rb"
+
 class FileTransfer
   def initialize(file_path, mode)
     @file = File.open(file_path, mode)
   end
   def divide_file_by_chunks
-        while(chunk = @file.read(1024 * 64))
+        while(chunk = @file.read(Constants::CHUNK_SIZE))
          if block_given?
          yield chunk
          end
