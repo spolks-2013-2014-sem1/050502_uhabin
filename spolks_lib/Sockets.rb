@@ -1,4 +1,5 @@
 require '../spolks_lib/BasicSocket.rb'
+require '../spolks_lib/Constants.rb'
 
 class XTcpSocket < BasicSocket
   attr_accessor :client_socket, :socket
@@ -16,7 +17,7 @@ class XTcpSocket < BasicSocket
     end
   end
   def listen
-    @socket.listen(5)
+    @socket.listen(Constants::BACKLOG_VALUE)
     self.accept
   end
   def connect(sockaddr)
@@ -24,19 +25,10 @@ class XTcpSocket < BasicSocket
   end
   def accept
     @client_socket, client_addrinfo = @socket.accept
-    a = A.new
-    a.inspect_client(client_addrinfo)
+    inspect_client(client_addrinfo)
   end
   def close
     @client_socket.close
     @socket.close
-  end
-end
-
-class A
-  def inspect_client (addrinfo)
-    print('Client info: ')
-    Socket.getnameinfo(addrinfo).each { |line| print(line + ' ') }
-    puts('')
   end
 end

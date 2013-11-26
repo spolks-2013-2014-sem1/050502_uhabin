@@ -4,12 +4,12 @@ require '../SPOLKS_LIB/Utility/FileTransfer.rb'
 class Client
   def initialize(socket, filepath)
     @socket = socket
-      @file_transfer = FileTransfer.new(filepath, Constants::WRITE_FILE_FLAG)
+    @file_transfer = FileTransfer.new(filepath, Constants::WRITE_FILE_FLAG)
   end
   def connect(host_name, port_number)
     sockaddr = Socket.sockaddr_in(port_number, host_name)
-      @socket.connect(sockaddr)
-      self.receive_file {|chunk| @file_transfer.create_file_with_chunks(chunk)}
+    @socket.connect(sockaddr)
+    self.receive_file {|chunk| @file_transfer.create_file_with_chunks(chunk)}
   end
   def receive_file
     loop do

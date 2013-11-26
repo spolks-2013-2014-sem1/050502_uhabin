@@ -4,7 +4,7 @@ require '../SPOLKS_LIB/Utility/FileTransfer.rb'
 class Server
   def initialize(socket, filepath)
     @socket = socket
-      @file_transfer = FileTransfer.new(filepath, Constants::READ_FILE_FLAG)
+    @file_transfer = FileTransfer.new(filepath, Constants::READ_FILE_FLAG)
   end
   def start
     @socket.listen
