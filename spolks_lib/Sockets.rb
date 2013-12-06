@@ -8,16 +8,14 @@ class XTcpSocket < BasicSocket
   end
   def create_socket(host_name, port_number)
     @socket = Socket.new(Socket::AF_INET, Socket::SOCK_STREAM, 0)
+    @socket.setsockopt(Socket::SOL_SOCKET, Socket::SO_REUSEADDR, true)
     @sockaddr = Socket.sockaddr_in(port_number, host_name)
-    begin
-      @socket.bind(@sockaddr)
-    rescue Errno::EADDRINUSE
-      @socket.close
-      create_socket(host_name, port_number)
-    end
+  end
+  def bind
+    @socket.bind(@sockaddr)
+    @socket.listen(Constants::BACKLOG_VALUE)
   end
   def listen
-    @socket.listen(Constants::BACKLOG_VALUE)
     self.accept
   end
   def connect(sockaddr)
