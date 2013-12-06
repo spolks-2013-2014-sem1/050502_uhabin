@@ -1,14 +1,17 @@
-lass TCPServer
+require '../spolks_lib/Sockets.rb'
+require '../spolks_lib/Constants.rb'
+
+class Server
   def initialize(socket, filepath)
     @socket = socket
-    @file = File.open(filepath, Constants::READ_FILE_FLAG)
+    @file = File.open(filepath, 'rb')
     @oob_data = 0
     @send_data = 0
   end
   def start
     @socket.bind
-         @socket.listen
-         self.send_file
+    @socket.listen
+    self.send_file
   end
   def send_file
     while (chunk = @file.read(Constants::CHUNK_SIZE))
@@ -26,12 +29,12 @@ lass TCPServer
   def send_oob_data
     if @oob_data % 32 == 0
       @oob_data = 0
-      STDOUT.puts "SEND OOB MESSAGE"
-      @socket.client_socket.send(Constants::OOB_MESSAGE, Socket::MSG_OOB)
+      STDOUT.puts "OOB sended"
+      @socket.client_socket.send('#', Socket::MSG_OOB)
     end
   end
   def stop
-         @socket.close
+    @socket.close
     @file.close
   end
 end

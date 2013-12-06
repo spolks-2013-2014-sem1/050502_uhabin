@@ -1,4 +1,5 @@
-require '../SPOLKS_LIB/Sockets/XTCPSocket.rb'
+require '../spolks_lib/Sockets.rb'
+require '../spolks_lib/Constants.rb'
 
 class Client
   def initialize(socket, filepath)
@@ -6,7 +7,7 @@ class Client
     @file = File.open(filepath, 'w')
     @received_data = 0
   end
-  def connect(port_number, host_name)
+  def connect(host_name, port_number)
     sockaddr = Socket.sockaddr_in(port_number, host_name)
     @socket.connect(sockaddr)
     self.receive_file {|chunk| @file.write(chunk)}
