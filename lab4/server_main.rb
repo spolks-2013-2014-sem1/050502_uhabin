@@ -12,10 +12,10 @@ protocol.downcase!
 case protocol
 when 'udp'
   socket = XUdpSocket.new('localhost', '3000')
-  client = UdpServer.new(socket, filepath)
+  server = UdpServer.new(socket, filepath)
 when 'tcp'
   socket = XTcpSocket.new('localhost', '3000')
-  client = TcpServer.new(socket, filepath)
+  server = TcpServer.new(socket, filepath)
 else
   puts "Dont know what does #{protocol} means"
 end

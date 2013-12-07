@@ -1,23 +1,23 @@
-require '../SPOLKS_LIB/Sockets/XTCPSocket.rb'
+require '../spolks_lib/Sockets.rb'
 
 class UdpServer
   def initialize(socket, filepath)
     @socket = socket
-    @file = File.open(filepath, Constants::READ_FILE_FLAG)
+    @file = File.open(filepath, 'rb')
   end
   def start
     @socket.bind
-         @socket.listen
-         self.send_file
+    @socket.listen
+    self.send_file
   end
   def send_file
     while (chunk = @file.read(Constants::CHUNK_SIZE / Constants::CHUNK_SIZE_DIVIDER_FOR_UDP))
       @socket.send(chunk, 0, @socket.client_sockaddr)
     end
-    @socket.send(Constants::UDP_MESSAGE, 0, @socket.client_sockaddr)
+    @socket.send('#', 0, @socket.client_sockaddr)
   end
   def stop
-         @socket.close
+    @socket.close
     @file.close
   end
 end

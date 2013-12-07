@@ -1,9 +1,9 @@
-require '../SPOLKS_LIB/Sockets/XTCPSocket.rb'
+require '../spolks_lib/Sockets.rb'
 
 class UdpClient
   def initialize(socket, filepath)
     @socket = socket
-    @file = File.open(filepath, Constants::WRITE_FILE_FLAG)
+    @file = File.open(filepath, 'w')
   end
   def connect(host_name, port_number)
     sockaddr = Socket.sockaddr_in(port_number, host_name)
@@ -18,7 +18,7 @@ class UdpClient
       break unless rs
       rs.each do |s|
       data = s.recv(Constants::CHUNK_SIZE / Constants::CHUNK_SIZE_DIVIDER_FOR_UDP)
-        return if (data.empty? || data == Constants::UDP_MESSAGE)
+        return if (data.empty? || data == '#')
         if block_given?
           yield data
         end
