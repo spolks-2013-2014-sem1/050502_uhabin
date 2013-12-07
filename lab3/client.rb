@@ -1,7 +1,7 @@
 require '../spolks_lib/Sockets.rb'
 require '../spolks_lib/Constants.rb'
 
-class Client
+class TcpClient
   def initialize(socket, filepath)
     @socket = socket
     @file = File.open(filepath, 'w')

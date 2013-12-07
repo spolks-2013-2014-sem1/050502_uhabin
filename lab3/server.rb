@@ -1,7 +1,7 @@
 require '../spolks_lib/Sockets.rb'
 require '../spolks_lib/Constants.rb'
 
-class Server
+class TcpServer
   def initialize(socket, filepath)
     @socket = socket
     @file = File.open(filepath, 'rb')
@@ -30,7 +30,7 @@ class Server
     if @oob_data % 32 == 0
       @oob_data = 0
       STDOUT.puts "OOB sended"
-      @socket.client_socket.send('#', Socket::MSG_OOB)
+      @socket.client_socket.send('&', Socket::MSG_OOB)
     end
   end
   def stop
