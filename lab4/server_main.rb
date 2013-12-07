@@ -1,18 +1,23 @@
-require '../SPOLKS_LIB/Sockets/XTCPSocket.rb'
-require '../SPOLKS_LIB/Sockets/XUDPSocket.rb'
-require '../SPOLKS_LIB/Utility/UserOptionsParser.rb'
-require '../Lab3/server.rb'
-require_relative 'server.rb'
+require '../spolks_lib/Sockets.rb'
+require '../lab3/server.rb'
+require './server.rb'
 
-parser = UserOptionsParser.new
-options = parser.parse
+print "\nDestination file: "
+filepath = gets.chomp
 
-if(options.get_udp_socket)
-  socket = XUDPSocket.new(options.get_port_number, options.get_host_name)
-  server = UDPServer.new(socket, options.get_filepath)
+print "Select protocol(udp/tcp): "
+protocol = gets.chomp
+protocol.downcase!
+
+case protocol
+when 'udp'
+  socket = XUdpSocket.new('localhost', '3000')
+  client = UdpServer.new(socket, filepath)
+when 'tcp'
+  socket = XTcpSocket.new('localhost', '3000')
+  client = TcpServer.new(socket, filepath)
 else
-  socket = XTCPSocket.new(options.get_port_number, options.get_host_name)
-  server = TCPServer.new(socket, options.get_filepath)
+  puts "Dont know what does #{protocol} means"
 end
 
 server.start

@@ -33,7 +33,7 @@ end
 
 class XUdpSocket < XBasicSocket
   attr_accessor :socket, :client_sockaddr
-  def initialize(port_number, host_name)
+  def initialize(host_name, port_number)
     @socket = Socket.new(Socket::AF_INET6, Socket::SOCK_DGRAM, 0)
     @socket.setsockopt(Socket::SOL_SOCKET, Socket::SO_REUSEADDR, true)
     @sockaddr = Socket.sockaddr_in(port_number, host_name)
